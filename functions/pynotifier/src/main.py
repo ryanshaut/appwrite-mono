@@ -16,7 +16,7 @@ def main(context):
 
     return context.res.json(
         {
-            "now":  datetime.datetime.now(),
+            "now":  str(datetime.datetime.now()),
             "res":res
         })
     # Why not try the Appwrite SDK?
