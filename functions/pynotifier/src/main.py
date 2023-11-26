@@ -1,10 +1,24 @@
 from appwrite.client import Client
 import os
+import requests
+import datetime
 
 
 # This is your Appwrite function
 # It's executed each time we get a request
 def main(context):
+    heartbeatUrl = os.environ.get('REMOTE_HEARTBEAT_URL', None)
+    if heartbeatUrl:
+        res = requests.get(heartbeatUrl)
+        console.log(res)
+    else:
+        res = "No heartbeat url specified"
+
+    return context.res.json(
+        {
+            "now":  datetime.datetime.now(),
+            "res":res
+        }
     # Why not try the Appwrite SDK?
     #
     # client = (
