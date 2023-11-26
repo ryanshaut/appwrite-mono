@@ -18,7 +18,7 @@ def main(context):
         {
             "now":  datetime.datetime.now(),
             "res":res
-        }
+        })
     # Why not try the Appwrite SDK?
     #
     # client = (
