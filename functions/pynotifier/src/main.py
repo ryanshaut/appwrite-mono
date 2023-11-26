@@ -10,7 +10,7 @@ def main(context):
     heartbeatUrl = os.environ.get('REMOTE_HEARTBEAT_URL', None)
     if heartbeatUrl:
         res = requests.get(heartbeatUrl)
-        console.log(res)
+        context.log(res)
     else:
         res = "No heartbeat url specified"
 
