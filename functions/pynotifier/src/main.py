@@ -1,4 +1,5 @@
 from appwrite.client import Client
+from appwrite.services.databases import Databases
 import os
 import requests
 import datetime
@@ -14,14 +15,32 @@ def main(context):
     else:
         res = "No heartbeat url specified"
 
-    return context.res.json(
-        {
+    heartBeatJson =         {
             "now": str(datetime.datetime.now()),
             "res": {
                 "status": res.status_code,
                 "body": res.json()
             }
-        })
+        }
+
+    client = (
+        Client()
+        .set_endpoint("https://cloud.appwrite.io/v1")
+        .set_project(os.environ["APPWRITE_FUNCTION_PROJECT_ID"])
+        .set_key(os.environ["APPWRITE_API_KEY"])
+    )
+
+    databases = Databases(client)
+    DATABASE_ID= '6563d535a0e17a3dba0e'
+    COLLECTION = {
+        "ID": 'ef96a122b28c64372c698bee5614ae25',
+        "NAME": "Heartbeats"
+    }
+    collection = databases.create_collection(DATABASE_ID, COLLECTION['ID'], COLLECTION['NAME'])
+
+    dbDoc = databases.create_document(DATABASE_ID, COLLECTION['ID'], uuid.uuid4(), heartBeatJson)
+
+    return context.res.json(heartBeatJson)
     # Why not try the Appwrite SDK?
     #
     # client = (
