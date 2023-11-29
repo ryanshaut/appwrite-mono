@@ -37,7 +37,7 @@ def main(context):
         "ID": 'ef96a122b28c64372c698bee5614ae25',
         "NAME": "Heartbeats"
     }
-    collection = databases.create_collection(DATABASE_ID, COLLECTION['ID'], COLLECTION['NAME'])
+    # collection = databases.create_collection(DATABASE_ID, COLLECTION['ID'], COLLECTION['NAME'])
 
     dbDoc = databases.create_document(DATABASE_ID, COLLECTION['ID'], uuid.uuid4(), heartBeatJson)
 
