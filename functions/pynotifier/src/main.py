@@ -39,7 +39,7 @@ def main(context):
     }
     # collection = databases.create_collection(DATABASE_ID, COLLECTION['ID'], COLLECTION['NAME'])
 
-    dbDoc = databases.create_document(DATABASE_ID, COLLECTION['ID'], str(uuid.uuid4()), heartBeatJson)
+    dbDoc = databases.create_document(DATABASE_ID, COLLECTION['ID'], str(uuid.uuid4()), {"data":heartBeatJson})
 
     return context.res.json(heartBeatJson)
     # Why not try the Appwrite SDK?
