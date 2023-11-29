@@ -3,6 +3,7 @@ from appwrite.services.databases import Databases
 import os
 import requests
 import datetime
+import uuid
 
 
 # This is your Appwrite function
