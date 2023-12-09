@@ -1,37 +1,55 @@
 from appwrite.client import Client
 import os
+import requests
+import datetime
+
+DadJokeSchema = {
+    "id": {"type": "string"},
+    "joke": {"type": "string"},
+    "status": {"type": "string"},
+    "insertedAtDateUTC": {"type": "datetime"},
+}
 
 
-# This is your Appwrite function
-# It's executed each time we get a request
 def main(context):
-    # Why not try the Appwrite SDK?
-    #
-    # client = (
-    #     Client()
-    #     .set_endpoint("https://cloud.appwrite.io/v1")
-    #     .set_project(os.environ["APPWRITE_FUNCTION_PROJECT_ID"])
-    #     .set_key(os.environ["APPWRITE_API_KEY"])
-    # )
+    try:
+        res = requests.get(
+            "https://icanhazdadjoke.com/", headers={"Accept": "application/json"}
+        )
+        # context.log(res.json())
 
-    # You can log messages to the console
-    context.log("Hello, Logs!")
-
-    # If something goes wrong, log an error
-    context.error("Hello, Errors!")
-
-    # The `ctx.req` object contains the request data
-    if context.req.method == "GET":
-        # Send a response with the res object helpers
-        # `ctx.res.send()` dispatches a string back to the client
-        return context.res.send("Hello, World!")
-
-    # `ctx.res.json()` is a handy helper for sending JSON
-    return context.res.json(
-        {
-            "motto": "Build like a team of hundreds_",
-            "learn": "https://appwrite.io/docs",
-            "connect": "https://appwrite.io/discord",
-            "getInspired": "https://builtwith.appwrite.io",
+        dadJoke = {
+            "id": res.json()["id"],
+            "joke": res.json()["joke"],
+            "status": str(res.json()["status"]),
+            "insertedAtDateUTC": datetime.datetime.now().isoformat()
         }
-    )
+    except requests.exceptions.RequestException as e:
+        res = e
+
+    dbClient = AppwriteDbClient(context)
+    db = dbClient.try_create_database("primary_db")
+    # collection = dbClient.try_create_collection(db, "Dadjokes", None, DadJokeSchema)
+    collection = dbClient.try_create_collection(db, "Dadjokes", None, None)
+    dbDoc = dbClient.addDocument(db, collection, dadJoke)
+
+    return context.res.json({"message": "ok", **dadJoke})
+
+
+if __name__ == "__main__":
+    import sys
+    import os
+    import re
+
+    cwd = os.getcwd()
+    sys.path.append(re.sub(r"functions\/(.*)", "", cwd))
+    # sys.path.append(cwd.replace("functions/dadjoke-extractor/src", ""))
+
+    from functions.shared.mockContext import MockContext, loadLocalEnv
+    from functions.shared.dbServices import AppwriteDbClient
+
+    loadLocalEnv(cwd)
+    main(MockContext())
+
+else:
+    from ...shared.dbServices import AppwriteDbClient

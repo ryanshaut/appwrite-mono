@@ -1,0 +1,10 @@
+{
+    "recommendations": [
+        "github.copilot",
+        "ms-python.black-formatter",
+        "njpwerner.autodocstring",
+        "ms-python.isort",
+        "ms-python.vscode-pylance",
+        "ms-python.python"
+    ]
+}
