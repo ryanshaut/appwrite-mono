@@ -1,0 +1,1 @@
+Sample appwrite function using NodeJS to provide a single endpoing at `/` that returns the current timestamp of the server.
