@@ -1,2 +1,2 @@
 appwrite
-git+https://github.com/ryanshaut/appwrite-mono#egg=pyappwriteutils&subdirectory=shared
+https://github.com/ryanshaut/appwrite-mono#egg=pyappwriteutils&subdirectory=shared
