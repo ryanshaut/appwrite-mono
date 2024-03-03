@@ -206,4 +206,3 @@ def main(context):
     else:
         return context.res.json({"message":f"unsupported method {context.req.method}"})
         
-main()
