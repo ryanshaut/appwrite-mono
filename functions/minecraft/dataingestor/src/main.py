@@ -19,7 +19,7 @@ def main(context):
     db = dbClient.try_create_database("primary_db")
     collection = dbClient.try_create_collection(db, "Minecraft_items", None, None)
     # dbDoc = dbClient.addDocument(db, collection, dadJoke)
-
+    context.log('running our code')
     # The `ctx.req` object contains the request data
     if context.req.method == "GET":
         # Send a response with the res object helpers
@@ -28,3 +28,4 @@ def main(context):
     else:
         return context.res.json({"message":f"unsupported method {context.req.method}"})
         
+main()
