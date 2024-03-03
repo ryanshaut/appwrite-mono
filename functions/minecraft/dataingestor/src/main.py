@@ -25,3 +25,6 @@ def main(context):
         # Send a response with the res object helpers
         # `ctx.res.send()` dispatches a string back to the client
         return context.res.json({"databases":dbClient.get_all_databases()})
+    else:
+        return context.res.json({"message":f"unsupported method {context.req.method}"})
+        
