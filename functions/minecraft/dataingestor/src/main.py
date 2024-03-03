@@ -17,10 +17,10 @@ from typing import Union
 class AppwriteDbClient:
     def __init__(self, context):
         self.client = (
-            Client()
-            .set_endpoint("https://cloud.appwrite.io/v1")
-            .set_project(os.environ["APPWRITE_FUNCTION_PROJECT_ID"])
-            .set_key(os.environ["APPWRITE_API_KEY"])
+         Client()
+         .set_endpoint("https://cloud.appwrite.io/v1")
+         .set_project(os.environ["APPWRITE_FUNCTION_PROJECT_ID"])
+         .set_key(os.environ["APPWRITE_API_KEY"])
         )
         self.context = context
         self.databases = Databases(self.client)
