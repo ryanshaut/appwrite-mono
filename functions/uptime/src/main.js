@@ -4,16 +4,24 @@ import { Client, Health } from 'node-appwrite';
 // It's executed each time we get a request
 export default async ({ req, res, log, error }) => {
   log('creating Appwrite client')
+  const endpoint =  process.env.APPWRITE_BASE_URL + '/v1'
+  const project = process.env.APPWRITE_FUNCTION_PROJECT_ID
+  const api_key = process.env.HEALTHCHECK_API_KEY
   const client = new Client()
-  .setEndpoint(process.env.APPWRITE_BASE_URL + '/v1') // Your API Endpoint 
-  .setProject(process.env.APPWRITE_FUNCTION_PROJECT_ID) // Your project ID 
-  .setKey(process.env.HEALTHCHECK_API_KEY); // Your secret API key
+  .setEndpoint(endpoint) // Your API Endpoint 
+  .setProject(project) // Your project ID 
+  .setKey(api_key); // Your secret API key
 
   log('creating Health client')
   const health = new Health(client);
   log('fetching time from Health endpoint')
-  const result = await health.getTime();
+  try {
+
   
+  const result = await health.getTime();
+  } catch (e){
+    log(`error checking health ${e}`)
+  }
   if (req.method === 'GET') {
     return res.json({
       date: new Date(),
