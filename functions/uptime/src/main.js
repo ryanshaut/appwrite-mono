@@ -16,7 +16,7 @@ export default async ({ req, res, log, error }) => {
   if (req.method === 'GET') {
     return res.json({
       date: new Date(),
-      health,
+      health: result,
       request:{
         headers: req.headers,
         queryString: req.queryString,
