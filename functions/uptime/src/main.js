@@ -9,8 +9,8 @@ export default async ({ req, res, log, error }) => {
     return res.json({
       date: new Date(), 
       request:{
-        headers: JSON.stringify(req.headers),
-        parameters: JSON.stringify(req.parameters),
+        headers: req.headers,
+        parameters: req.parameters,
         body: req.body
       }
     });
