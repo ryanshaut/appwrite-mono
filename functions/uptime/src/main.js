@@ -1,4 +1,4 @@
-import { Client } from 'node-appwrite';
+import { Client, Health } from 'node-appwrite';
 const client = new Client()
   .setEndpoint(process.env.APPWRITE_BASE_URL + '/v1') // Your API Endpoint 
   .setProject(process.env.APPWRITE_FUNCTION_PROJECT_ID) // Your project ID 
@@ -9,7 +9,7 @@ const client = new Client()
 export default async ({ req, res, log, error }) => {
 
   log(process.env)
-  const health = new sdk.Health(client);
+  const health = new Health(client);
   const result = await health.getTime();
   
   log(new Date());
