@@ -15,10 +15,9 @@ export default async ({ req, res, log, error }) => {
   log('creating Health client')
   const health = new Health(client);
   log('fetching time from Health endpoint')
-  try {
-
-  
-  const result = await health.getTime();
+  const result = null
+  try {  
+    //result = await health.getTime();
   } catch (e){
     log(`error checking health ${e}`)
   }
