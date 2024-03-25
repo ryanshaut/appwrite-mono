@@ -1,4 +1,4 @@
-import { Client, Health, Users } from 'node-appwrite';
+import { Client, Health, Users, ID } from 'node-appwrite';
 
 // This is your Appwrite function
 // It's executed each time we get a request
@@ -14,7 +14,7 @@ export default async ({ req, res, log, error }) => {
 
   let users = new Users(client);
 
-  let user = await users.create(sdk.ID.unique(), "email@example.com", "+123456789", "password", "Walter O'Brien");
+  let user = await users.create(ID.unique(), "email@example.com", "+123456789", "password", "Walter O'Brien");
 
   log('creating Health client')
   const health = new Health(client);
