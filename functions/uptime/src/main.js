@@ -1,4 +1,4 @@
-import { Client, Health } from 'node-appwrite';
+import { Client, Health, Users } from 'node-appwrite';
 
 // This is your Appwrite function
 // It's executed each time we get a request
@@ -11,6 +11,10 @@ export default async ({ req, res, log, error }) => {
   .setEndpoint(endpoint) // Your API Endpoint 
   .setProject(project) // Your project ID 
   .setKey(api_key); // Your secret API key
+
+  let users = new Users(client);
+
+  let user = await users.create(sdk.ID.unique(), "email@example.com", "+123456789", "password", "Walter O'Brien");
 
   log('creating Health client')
   const health = new Health(client);
@@ -25,10 +29,11 @@ export default async ({ req, res, log, error }) => {
     return res.json({
       date: new Date(),
       health: result,
+      user,
       request:{
-        headers: req.headers,
+        //headers: req.headers,
         queryString: req.queryString,
-        body: req.body
+        //body: req.body
       }
     });
   } else {
