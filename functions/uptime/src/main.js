@@ -17,7 +17,7 @@ export default async ({ req, res, log, error }) => {
       date: new Date(),
       request:{
         //queryString: req.queryString,
-        ...request
+        ...req
       }
     });
   } else {
