@@ -21,14 +21,14 @@ export default async ({ req, res, log, error }) => {
   log('fetching time from Health endpoint')
   const result = null
   try {  
-    result = await health.getTime();
+    //result = await health.getTime();
   } catch (e){
     log(`error checking health ${e}`)
   }
   if (req.method === 'GET') {
     return res.json({
       date: new Date(),
-      health: result,
+      //health: result,
     //  user,
       request:{
         //headers: req.headers,
