@@ -12,28 +12,12 @@ export default async ({ req, res, log, error }) => {
   .setProject(project) // Your project ID 
   .setKey(api_key); // Your secret API key
 
-  //let users = new Users(client);
-
-  //let user = await users.create(ID.unique(), "email@example.com", "+123456789", "password", "Walter O'Brien");
-
-  log('creating Health client')
-  const health = new Health(client);
-  log('fetching time from Health endpoint')
-  const result = null
-  try {  
-    //result = await health.getTime();
-  } catch (e){
-    log(`error checking health ${e}`)
-  }
   if (req.method === 'GET') {
     return res.json({
       date: new Date(),
-      //health: result,
-    //  user,
       request:{
-        //headers: req.headers,
-        queryString: req.queryString,
-        //body: req.body
+        //queryString: req.queryString,
+        ...request
       }
     });
   } else {
