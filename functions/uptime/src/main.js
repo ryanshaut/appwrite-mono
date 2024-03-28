@@ -1,4 +1,4 @@
-import { Client, Health, Users, ID } from 'node-appwrite';
+import { Client, Databases } from 'node-appwrite';
 
 // This is your Appwrite function
 // It's executed each time we get a request
@@ -12,6 +12,17 @@ export default async ({ req, res, log, error }) => {
   .setProject(project) // Your project ID 
   .setKey(api_key); // Your secret API key
 
+  if (req.path === '/dbload'){
+    log('Prepping DB')
+    const databases = new Databases(client);
+
+    const result = await databases.createCollection( 
+          'healthchecks', // databaseId
+          process.env.APP_ENVIRONMENT, // collectionId
+          process.env.APP_ENVIRONMENT // name
+          );
+    
+  }
   if (req.method === 'GET') {
     return res.json({
       date: new Date(),
