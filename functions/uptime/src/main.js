@@ -49,19 +49,20 @@ export default async ({ req, res, log, error }) => {
 
   log('creating mysql client')
   const db_client = create_mysql_client()
+  let rows, fields, dbError = null
   try {
     // For pool initialization, see above
-    const [rows, fields] = await pool.query('SELECT 1 + 1 AS solution');
+    [rows, fields] = await pool.query('SELECT 1 + 1 AS solution');
     // Connection is automatically released when query resolves
   } catch (err) {
     console.log(err);
-    rows = [err]
-    fields = [err]
+     dbError = err
   }
     return res.json({
       date: new Date(),
       rows,
       fields,
+      dbError,
       request:{
         //queryString: req.queryString,
         ...req
