@@ -52,7 +52,7 @@ export default async ({ req, res, log, error }) => {
   let rows, fields, dbError = null
   try {
     // For pool initialization, see above
-    [rows, fields] = await pool.query('SELECT 1 + 1 AS solution');
+    [rows, fields] = await db_client.query('SELECT 1 + 1 AS solution');
     // Connection is automatically released when query resolves
   } catch (err) {
     console.log(err);
