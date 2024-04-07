@@ -41,9 +41,16 @@ function create_appwrite_client(){
   return client
 }
 
+async function write_to_db(client, query){
+  [rows, fields] = await db_client.query(query);
+}
+
 // This is your Appwrite function
 // It's executed each time we get a request
 export default async ({ req, res, log, error }) => {
+  if (req.query.API_KEY !== get_env_var('UPTIME_CLIENT_API_KEY')){
+    return res.status(403).json({error: 'Unauthorized'})
+  }
   log('creating Appwrite client')
   const client = create_appwrite_client()
 
@@ -51,9 +58,8 @@ export default async ({ req, res, log, error }) => {
   const db_client = create_mysql_client()
   let rows, fields, dbError = null
   try {
-    // For pool initialization, see above
-    [rows, fields] = await db_client.query('SELECT 1 + 1 AS solution');
-    // Connection is automatically released when query resolves
+    log(`Querying database with query: ${req.body.query}`)
+    [rows, fields] = await write_to_db(db_client, req.body.query || 'SELECT 1 + 1 AS solution');
   } catch (err) {
     console.log(err);
      dbError = err
