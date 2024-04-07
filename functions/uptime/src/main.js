@@ -1,29 +1,31 @@
 import { Client, Databases } from 'node-appwrite';
 
+function get_env_var(key){
+  const value = process.env[key]
+  if (!value){
+    throw new Error(`Missing required env var ${key}`)
+  }
+  return value
+
+}
+
+function create_appwrite_client(){
+  log('creating Appwrite client')
+  const endpoint =  get_env_var('APPWRITE_BASE_URL') + '/v1'
+  const project = get_env_var('APPWRITE_FUNCTION_PROJECT_ID')
+  const api_key = get_env_var('HEALTHCHECK_API_KEY')
+  const client = new Client()
+  .setEndpoint(endpoint) // Your API Endpoint
+  .setProject(project) // Your project ID
+  .setKey(api_key); // Your secret API key
+  return client
+}
+
 // This is your Appwrite function
 // It's executed each time we get a request
 export default async ({ req, res, log, error }) => {
-  log('creating Appwrite client')
-  const endpoint =  process.env.APPWRITE_BASE_URL + '/v1'
-  const project = process.env.APPWRITE_FUNCTION_PROJECT_ID
-  const api_key = process.env.HEALTHCHECK_API_KEY
-  const client = new Client()
-  .setEndpoint(endpoint) // Your API Endpoint 
-  .setProject(project) // Your project ID 
-  .setKey(api_key); // Your secret API key
+  const client = create_appwrite_client()
 
-  if (req.path === '/dbload'){
-    log('Prepping DB')
-    const databases = new Databases(client);
-
-    const result = await databases.createCollection( 
-          'healthchecks', // databaseId
-          process.env.APP_ENVIRONMENT, // collectionId
-          process.env.APP_ENVIRONMENT // name
-          );
-    
-  }
-  if (req.method === 'GET') {
     return res.json({
       date: new Date(),
       request:{
@@ -31,8 +33,5 @@ export default async ({ req, res, log, error }) => {
         ...req
       }
     });
-  } else {
-    return res.json({message: `bad HTTP method ${req.method}`})
-  }
 
 };
