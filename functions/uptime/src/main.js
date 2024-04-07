@@ -49,7 +49,7 @@ async function write_to_db(client, query){
 // It's executed each time we get a request
 export default async ({ req, res, log, error }) => {
   if (req.query.API_KEY !== get_env_var('UPTIME_CLIENT_API_KEY')){
-    return res.status(403).json({error: 'Unauthorized'})
+    return res.json({error: 'Unauthorized'}, 403)
   }
   log('creating Appwrite client')
   const client = create_appwrite_client()
