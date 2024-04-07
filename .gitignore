@@ -1,5 +1,7 @@
 # from https://github.com/github/gitignore/blob/main/Python.gitignore
 
+node_modules/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

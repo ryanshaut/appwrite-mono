@@ -5,12 +5,13 @@
     "main": "src/main.js",
     "type": "module",
     "scripts": {
-      "format": "prettier --write ."
+        "format": "prettier --write ."
     },
     "dependencies": {
-      "node-appwrite": "^9.0.0"
+        "mysql2": "^3.9.3",
+        "node-appwrite": "^9.0.0"
     },
     "devDependencies": {
-      "prettier": "^3.0.0"
+        "prettier": "^3.0.0"
     }
-  }
+}
