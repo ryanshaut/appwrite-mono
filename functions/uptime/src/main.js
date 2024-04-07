@@ -10,7 +10,6 @@ function get_env_var(key){
 }
 
 function create_appwrite_client(){
-  log('creating Appwrite client')
   const endpoint =  get_env_var('APPWRITE_BASE_URL') + '/v1'
   const project = get_env_var('APPWRITE_FUNCTION_PROJECT_ID')
   const api_key = get_env_var('HEALTHCHECK_API_KEY')
@@ -24,6 +23,7 @@ function create_appwrite_client(){
 // This is your Appwrite function
 // It's executed each time we get a request
 export default async ({ req, res, log, error }) => {
+  log('creating Appwrite client')
   const client = create_appwrite_client()
 
     return res.json({
