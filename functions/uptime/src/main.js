@@ -48,6 +48,11 @@ async function write_to_db(client, query){
 // This is your Appwrite function
 // It's executed each time we get a request
 export default async ({ req, res, log, error }) => {
+  // blank favicon request
+  if (req.url === '/favicon.ico') {
+    return res.end();
+  }
+
   if (req.query.API_KEY !== get_env_var('UPTIME_CLIENT_API_KEY')){
     return res.json({error: 'Unauthorized'}, 403)
   }
