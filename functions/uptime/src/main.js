@@ -67,7 +67,7 @@ export default async ({ req, res, log, error }) => {
     log(`Querying database with query: ${query}`)
     [rows, fields] = await write_to_db(db_client, query);
   } catch (err) {
-    console.log(err);
+    log(err);
      dbError = err
   }
     return res.json({
