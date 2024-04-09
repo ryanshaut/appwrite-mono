@@ -76,10 +76,6 @@ export default async ({ req, res, log, error }) => {
     rows,
     fields,
     dbError,
-    request:{
-      //queryString: req.queryString,
-      ...req
-    }
   }
 
   if (req.query.includeRequest && (req.query.includeRequest == 'true')){
