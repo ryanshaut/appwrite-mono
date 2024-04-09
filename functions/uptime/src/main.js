@@ -67,18 +67,23 @@ export default async ({ req, res, log, error }) => {
     log(`Querying database with query: ${query}`)
     [rows, fields] = await write_to_db(db_client, query);
   } catch (err) {
-    log(err);
+    consolelog(err);
      dbError = err
   }
-    return res.json({
-      date: new Date(),
-      rows,
-      fields,
-      dbError,
-      request:{
-        //queryString: req.queryString,
-        ...req
-      }
-    });
 
+  const response = {
+    date: new Date(),
+    rows,
+    fields,
+    dbError,
+    request:{
+      //queryString: req.queryString,
+      ...req
+    }
+  }
+
+  if (req.query.includeRequest && (req.query.includeRequest == 'true')){
+    response.request = req
+  } 
+  res.json(response);
 };
