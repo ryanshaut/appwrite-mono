@@ -42,7 +42,7 @@ function create_appwrite_client(){
 }
 
 async function write_to_db(client, query){
-  [rows, fields] = await db_client.query(query);
+  [rows, fields] = await client.query(query);
 }
 
 // This is your Appwrite function
@@ -58,8 +58,9 @@ export default async ({ req, res, log, error }) => {
   const db_client = create_mysql_client()
   let rows, fields, dbError = null
   try {
-    log(`Querying database with query: ${req.body.query}`)
-    [rows, fields] = await write_to_db(db_client, req.body.query || 'SELECT 1 + 1 AS solution');
+    query = req.body.query || 'SELECT 1 + 1 AS solution'
+    log(`Querying database with query: ${query}`)
+    [rows, fields] = await write_to_db(db_client, query);
   } catch (err) {
     console.log(err);
      dbError = err
