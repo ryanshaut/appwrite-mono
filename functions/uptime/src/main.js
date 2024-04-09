@@ -63,7 +63,7 @@ export default async ({ req, res, log, error }) => {
   const db_client = create_mysql_client()
   let rows, fields, dbError = null
   try {
-    query = req.body.query || 'SELECT 1 + 1 AS solution'
+    const query = req.body.query || 'SELECT 1 + 1 AS solution'
     log(`Querying database with query: ${query}`)
     [rows, fields] = await write_to_db(db_client, query);
   } catch (err) {
