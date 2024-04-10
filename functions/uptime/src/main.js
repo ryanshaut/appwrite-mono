@@ -75,11 +75,13 @@ export default async ({ req, res, log, error }) => {
   
   let rows, fields, dbError = null
   try {
+    log('writing to db')
     [rows, fields] = await db_client.execute('INSERT INTO test_data (data) VALUES (?)', [JSON.stringify(response)]);
   } catch (err) {
     log(err);
-     dbError = err
+    dbError = err;
   }
-
+  log('done, returning a response')
   res.json({rows, fields, dbError, response});
+
 };
