@@ -83,5 +83,5 @@ export default async ({ req, res, log, error }) => {
      dbError = err
   }
 
-  res.json({row, fields, dbError, response});
+  res.json({rows, fields, dbError, response});
 };
