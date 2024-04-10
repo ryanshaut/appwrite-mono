@@ -75,9 +75,7 @@ export default async ({ req, res, log, error }) => {
   
   let rows, fields, dbError = null
   try {
-    const query = req.body.query || 'SELECT 1 + 1 AS solution'
-    log(`Querying database with query: ${query}`)
-    [rows, fields] = await write_to_db(db_client, query);
+    [rows, fields] = await db_client.execute('INSERT INTO test_data (data) VALUES (?)', [JSON.stringify(response)]);
   } catch (err) {
     log(err);
      dbError = err
