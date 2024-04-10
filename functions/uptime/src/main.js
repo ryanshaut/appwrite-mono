@@ -50,7 +50,7 @@ async function write_to_db(client, query){
 export default async ({ req, res, log, error }) => {
   // blank favicon request
   if (req.url === '/favicon.ico') {
-    return res.end();
+    return res.empty();
   }
 
   if (req.query.API_KEY !== get_env_var('UPTIME_CLIENT_API_KEY')){
@@ -62,6 +62,17 @@ export default async ({ req, res, log, error }) => {
   log('creating mysql client')
   const db_client = create_mysql_client()
   let rows, fields, dbError = null
+
+
+  const response = {
+    date: new Date(),
+    source: req.query.source
+  }
+
+  if (req.query.includeRequest && (req.query.includeRequest == 'true')){
+    response.request = req
+  } 
+
   try {
     const query = req.body.query || 'SELECT 1 + 1 AS solution'
     log(`Querying database with query: ${query}`)
@@ -71,15 +82,5 @@ export default async ({ req, res, log, error }) => {
      dbError = err
   }
 
-  const response = {
-    date: new Date(),
-    rows,
-    fields,
-    dbError,
-  }
-
-  if (req.query.includeRequest && (req.query.includeRequest == 'true')){
-    response.request = req
-  } 
-  res.json(response);
+  res.json({row, fields, dbError, response});
 };
