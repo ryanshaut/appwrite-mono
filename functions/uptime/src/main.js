@@ -54,7 +54,7 @@ export default async ({ req, res, log, error }) => {
   try {
     log('Inserting into database')
     [rows, fields] = await db_client.execute(`INSERT INTO ${db_table} (data) VALUES (?)`, [JSON.stringify(response)]);
-    log(`Done, inserted ${rows.affectedRows} rows`);
+    response.dbAction = "success"
   } catch (err) {
     log(`Error inserting into database: ${err}`);
     dbError = err;
