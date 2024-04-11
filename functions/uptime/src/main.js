@@ -52,7 +52,7 @@ export default async ({ req, res, log, error }) => {
   let rows, fields, dbError = null
   try {
     log('Inserting into database')
-    table = get_env_var('MYSQL_DB_DATABASE')
+    const table = get_env_var('MYSQL_DB_DATABASE')
     [rows, fields] = await db_client.execute(`INSERT INTO ${table} (data) VALUES (?)`, [JSON.stringify(response)]);
     log(`Done, inserted ${rows.affectedRows} rows`);
   } catch (err) {
