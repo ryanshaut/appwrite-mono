@@ -53,8 +53,7 @@ export default async ({ req, res, log, error }) => {
   const db_table = get_env_var('MYSQL_DB_TABLE')
   try {
     log('Inserting into database')
-    [rows, fields] = await db_client.execute(`INSERT INTO ${db_table} (data) VALUES (?)`, [JSON.stringify(response)]);
-    response.dbAction = "success"
+    response.dbAction = await db_client.execute(`INSERT INTO ${db_table} (data) VALUES (?)`, [JSON.stringify(response)]);
   } catch (err) {
     log(`Error inserting into database: ${err}`);
     dbError = err;
