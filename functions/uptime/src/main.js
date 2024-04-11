@@ -65,6 +65,7 @@ export default async ({ req, res, log, error }) => {
 
   
   const response = {
+    version: '1.0',
     date: new Date(),
     source: req.query.source
   }
@@ -76,7 +77,8 @@ export default async ({ req, res, log, error }) => {
   let rows, fields, dbError = null
   try {
     log('writing to db')
-    [rows, fields] = await db_client.execute('INSERT INTO test_data (data) VALUES (?)', [JSON.stringify(response)]);
+    table = get_env_var('MYSQL_DB_DATABASE')
+    [rows, fields] = await db_client.execute(`INSERT INTO ${table} (data) VALUES (?)`, [JSON.stringify(response)]);
   } catch (err) {
     log(err);
     dbError = err;
