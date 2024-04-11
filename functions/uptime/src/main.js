@@ -61,3 +61,4 @@ export default async ({ req, res, log, error }) => {
   return res.json({rows, fields, dbError, response});
 
 };
+
