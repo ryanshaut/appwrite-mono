@@ -82,6 +82,6 @@ export default async ({ req, res, log, error }) => {
     dbError = err;
   }
   log('done, returning a response')
-  return res.json({rows, fields, dbError, response});
+  return res.json({rows, fields, dbError, response, UPTIME_CLIENT_VAR: get_env_var('UPTIME_CLIENT_VAR')});
 
 };
