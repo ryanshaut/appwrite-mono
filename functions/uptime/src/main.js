@@ -34,9 +34,9 @@ export default async ({ req, res, log, error }) => {
     return res.empty();
   }
 
-  if (req.query.API_KEY !== get_env_var('UPTIME_CLIENT_API_KEY')){
-    return res.json({error: 'Unauthorized'}, 403)
-  }
+  // if (req.query.API_KEY !== get_env_var('UPTIME_CLIENT_API_KEY')){
+  //   return res.json({error: 'Unauthorized'}, 403)
+  // }
   const db_client = create_mysql_client()
   
   const response = {
